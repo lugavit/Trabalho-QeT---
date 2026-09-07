@@ -1,11 +1,11 @@
-# Trabalho Qualidade e Teste - Grupo 2
+# Trabalho Qualidade e Teste - Grupo *
 Sistema de ERP web desenvolvido em Java com Spring Framework com testes automatizados
 
 ## Alunos:
 - Lucas Sodré
-- Italo Ferreira
-- Filipe dos Santos
-- Caio Felipe
+- Lucas Cabral
+- Mateus Sacramento
+- Davis Esmael
 
 # Recursos
 - Cadastro produtos/clientes/fornecedor

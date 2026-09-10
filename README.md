@@ -44,4 +44,7 @@ Para logar no sistema, use o usuário "gerente" e a senha "123".
 - Docker
 
 # Link Documentação
-- https://docs.google.com/document/d/1mK01bCOukl_Hr3rn6zf7jXFrKGeH8uCaTpplr8V-WGs/edit?usp=sharing
+- Relatório - https://docs.google.com/document/d/1mK01bCOukl_Hr3rn6zf7jXFrKGeH8uCaTpplr8V-WGs/edit?usp=sharing
+
+- Lucas Sodré Uso de IA - https://docs.google.com/document/d/1tlYg-OXKf8AkD2y8t6_LMMFC_wGddm7so_F5_e4vcoE/edit?usp=sharing
+

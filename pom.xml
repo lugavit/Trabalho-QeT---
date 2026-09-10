@@ -32,7 +32,12 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<java.version>1.8</java.version>
+		
+		<!-- Força as versões compatíveis com Java 11 -->
+		<mockito.version>3.4.6</mockito.version>
+		<byte-buddy.version>1.10.13</byte-buddy.version>
 	</properties>
+	
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -96,12 +101,7 @@
 			<artifactId>xstream</artifactId>
 			<version>1.4.19</version>
 		</dependency>
-		<!-- Dependência do container integrado -->
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-tomcat</artifactId>
-			<scope>provided</scope>
-		</dependency>
+
  </dependencies>
 
 	<build>
@@ -109,6 +109,16 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>2.22.2</version> <!-- Versão mais estável para evitar o crash -->
+				<configuration>
+        			<!-- Desabilita o classloader do sistema, resolvendo conflitos do JaCoCo com Java 11+ -->
+        			<useSystemClassLoader>false</useSystemClassLoader> 
+    			</configuration>
 			</plugin>
 
 			<plugin>

@@ -1,4 +1,4 @@
-# Trabalho Qualidade e Teste - Grupo 2
+# Trabalho Qualidade e Teste - Grupo *
 Sistema de ERP web desenvolvido em Java com Spring Framework com testes automatizados
 
 ## Alunos:
@@ -42,3 +42,6 @@ Para logar no sistema, use o usuário "gerente" e a senha "123".
 - Hibernate
 - FlyWay
 - Docker
+
+# Link documentação
+- https://docs.google.com/document/d/1mK01bCOukl_Hr3rn6zf7jXFrKGeH8uCaTpplr8V-WGs/edit?usp=sharing

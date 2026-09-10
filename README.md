@@ -3,9 +3,9 @@ Sistema de ERP web desenvolvido em Java com Spring Framework com testes automati
 
 ## Alunos:
 - Lucas Sodré
-- Italo Ferreira
-- Filipe dos Santos
-- Caio Felipe
+- Lucas Cabral
+- Mateus Sacramento
+- Davis Esmael
 
 # Recursos
 - Cadastro produtos/clientes/fornecedor
@@ -42,6 +42,3 @@ Para logar no sistema, use o usuário "gerente" e a senha "123".
 - Hibernate
 - FlyWay
 - Docker
-
-# Link documentação
-- https://docs.google.com/document/d/1mK01bCOukl_Hr3rn6zf7jXFrKGeH8uCaTpplr8V-WGs/edit?usp=sharing

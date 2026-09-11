@@ -6,6 +6,7 @@ Sistema de ERP web desenvolvido em Java com Spring Framework com testes automati
 - Lucas Cabral
 - Mateus Sacramento
 - Davis Esmael
+- Paulo Rodrigo
 
 # Recursos
 - Cadastro produtos/clientes/fornecedor
@@ -31,6 +32,9 @@ Sistema de ERP web desenvolvido em Java com Spring Framework com testes automati
     - ``docker-compose up --build`` (Aguarde até o app pdv iniciar)
 - Abra um terminal adicional e rode:
     - ``mvn test -DforkCount=0``
+ 
+- O app estará disponível em:
+      - http://localhost:8080/
 
 # Login administrador
 Para logar no sistema, use o usuário "gerente" e a senha "123".

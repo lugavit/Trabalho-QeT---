@@ -20,6 +20,28 @@
 		<nature>org.eclipse.jdt.core.javanature</nature>
 		<nature>org.eclipse.m2e.core.maven2Nature</nature>
 	</natures>
+	<linkedResources>
+		<link>
+			<name>.._Trabalho-QeT---.worktrees_validate-vendaservice-tests-and-mocks_src_main_java</name>
+			<type>2</type>
+			<location>//C:/Users/lugav/OneDrive/Documentos/GitHub/Trabalho-QeT---.worktrees/validate-vendaservice-tests-and-mocks/src/main/java/</location>
+		</link>
+		<link>
+			<name>.._Trabalho-QeT---.worktrees_validate-vendaservice-tests-and-mocks_src_main_resources</name>
+			<type>2</type>
+			<location>//C:/Users/lugav/OneDrive/Documentos/GitHub/Trabalho-QeT---.worktrees/validate-vendaservice-tests-and-mocks/src/main/resources/</location>
+		</link>
+		<link>
+			<name>.._Trabalho-QeT---.worktrees_validate-vendaservice-tests-and-mocks_src_test_java</name>
+			<type>2</type>
+			<location>//C:/Users/lugav/OneDrive/Documentos/GitHub/Trabalho-QeT---.worktrees/validate-vendaservice-tests-and-mocks/src/test/java/</location>
+		</link>
+		<link>
+			<name>.._Trabalho-QeT---.worktrees_validate-vendaservice-tests-and-mocks_target_classes</name>
+			<type>2</type>
+			<location>//C:/Users/lugav/OneDrive/Documentos/GitHub/Trabalho-QeT---.worktrees/validate-vendaservice-tests-and-mocks/target/classes/</location>
+		</link>
+	</linkedResources>
 	<filteredResources>
 		<filter>
 			<id>1777230973202</id>

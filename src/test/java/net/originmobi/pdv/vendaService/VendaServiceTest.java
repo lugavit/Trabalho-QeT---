@@ -1,4 +1,4 @@
-package net.originmobi.pdv;
+package net.originmobi.pdv.vendaService;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.any;

@@ -60,3 +60,5 @@ Para logar no sistema, use o usuário "gerente" e a senha "123".
 - Lucas Sodré Uso de IA
   - <https://docs.google.com/document/d/1tlYg-OXKf8AkD2y8t6_LMMFC_wGddm7so_F5_e4vcoE/edit?usp=sharing>
   - \docs\ai\AI-LOG-Lucas.S.md
+- LUCAS DOS SANTOS uso de I.A
+   - <https://docs.google.com/document/d/1dv712XlZ3jS_mLKI8FzXd94eMappuMh8a_EvRGHdgEU/edit?usp=sharing>

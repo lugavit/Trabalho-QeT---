@@ -64,3 +64,6 @@ Para logar no sistema, use o usuário "gerente" e a senha "123".
    - <https://docs.google.com/document/d/1dv712XlZ3jS_mLKI8FzXd94eMappuMh8a_EvRGHdgEU/edit?usp=sharing>
 - Mateus Sacramento - Uso de IA
   - <https://docs.google.com/document/d/1vQ_x3osLlFGZ7qSuDIdj0CCssJOHfyOuoohleFVoGa8/edit?usp=sharing>
+- Davis Esmael - Uso de IA
+  - <https://docs.google.com/document/d/1zLUiV9bmc-UWs46YsiIM7Z01NAKDSgyiY218q6bYJtg/edit?tab=t.0>
+  -  \docs\ai\AI-LOG-Davis.md 

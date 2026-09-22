@@ -18,26 +18,26 @@
 			<attribute name="m2e-apt" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="src" output=".._Trabalho-QeT---.worktrees_validate-vendaservice-tests-and-mocks_target_classes" path=".._Trabalho-QeT---.worktrees_validate-vendaservice-tests-and-mocks_src_main_java">
+	<classpathentry kind="src" output="target/classes" path="src/main/java">
 		<attributes>
 			<attribute name="optional" value="true"/>
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry excluding="**" kind="src" output=".._Trabalho-QeT---.worktrees_validate-vendaservice-tests-and-mocks_target_classes" path=".._Trabalho-QeT---.worktrees_validate-vendaservice-tests-and-mocks_src_main_resources">
+	<classpathentry excluding="**" kind="src" output="target/classes" path="src/main/resources">
 		<attributes>
 			<attribute name="maven.pomderived" value="true"/>
 			<attribute name="optional" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="src" output=".._Trabalho-QeT---.worktrees_validate-vendaservice-tests-and-mocks_target_test-classes" path=".._Trabalho-QeT---.worktrees_validate-vendaservice-tests-and-mocks_src_test_java">
+	<classpathentry kind="src" output="target/test-classes" path="src/test/java">
 		<attributes>
 			<attribute name="optional" value="true"/>
 			<attribute name="maven.pomderived" value="true"/>
 			<attribute name="test" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry excluding="**" kind="src" output=".._Trabalho-QeT---.worktrees_validate-vendaservice-tests-and-mocks_target_test-classes" path="Users/lugav/OneDrive/Documentos/GitHub/Trabalho-QeT---.worktrees/validate-vendaservice-tests-and-mocks/src/test/resources">
+	<classpathentry excluding="**" kind="src" output="target/test-classes" path="src/test/resources">
 		<attributes>
 			<attribute name="maven.pomderived" value="true"/>
 			<attribute name="test" value="true"/>
@@ -53,5 +53,5 @@
 			<attribute name="test" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="output" path=".._Trabalho-QeT---.worktrees_validate-vendaservice-tests-and-mocks_target_classes"/>
+	<classpathentry kind="output" path="target/classes"/>
 </classpath>

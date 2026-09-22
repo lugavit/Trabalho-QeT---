@@ -55,7 +55,9 @@ Para logar no sistema, use o usuário "gerente" e a senha "123".
 
 ## Link Documentação
 
-- Relatório - <https://docs.google.com/document/d/1mK01bCOukl_Hr3rn6zf7jXFrKGeH8uCaTpplr8V-WGs/edit?usp=sharing>
+- Relatório 1ª entrega - <https://docs.google.com/document/d/1mK01bCOukl_Hr3rn6zf7jXFrKGeH8uCaTpplr8V-WGs/edit?usp=sharing>
+
+- Plano de Teste - <https://docs.google.com/document/d/1A0FWvNbpERpjjH-OJiK_gpeOfiieHYOd/edit?usp=sharing&ouid=111912973904528890848&rtpof=true&sd=true>
 
 - Lucas Sodré Uso de IA
   - <https://docs.google.com/document/d/1tlYg-OXKf8AkD2y8t6_LMMFC_wGddm7so_F5_e4vcoE/edit?usp=sharing>

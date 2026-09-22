@@ -59,13 +59,5 @@ Por que não testamos:
 
 - **Modificações:** pradonizar o uso `doThrow(...).when(...)`.  refatoração do código e eliminar a necessidade -> any(), anyLong(), anyString() .
 
-## Registro 03
 
-- **Data:** 20/09/2026
-- **Ferramenta:** Gemini 3.8 flash.
-- **Objetivo:** ajudar a construir teste manual no test link de modo eficiente.
-- **Prompt:** assuma que voce e testador experiente e tem como objetivo -> Uso da ferramenta Testlink para ao menos um cenário de teste . funcionalidade de um sistema web pdv. justifique o que fazer? e pergunte o que precisa saber?
-- **Resultado:**  a ia apresentou estrategia para criar teste manual na ferramenta test link, padrao usado na aula de laboratório da professora Vania (criar projeto de teste -> criar plano de teste -> criar caso de teste -> especificar caso de teste -> adicionar suite de teste ->adiiconar ao plano de teste -> criar/build release -> criar plataformas -> adicionar plataforma ao plano de teste -> executar teste -> relatorio gerar no teste link(pdf)).
-- **Uso no projeto:** os teste foi feito para a funcionalidade " adicionar forma de pagamento".
-- **Modificações:** refazer o caso de teste para abranger situações de falha. porque o sistema web pdv aceita erros como {data inválida: para cartão de crédito} e {campo nulo: nome do metodo de pagamento}.
 

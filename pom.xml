@@ -204,11 +204,11 @@
 				<version>1.11.1</version>
 				<configuration>
 					<targetClasses>
-						<param>net.originmobi.pdv.service.ProdutoService</param>
+						<param>net.originmobi.pdv.service*</param>
 					</targetClasses>
 					<targetTests>
-						<!-- Usando um coringa (*) para incluir tanto o teste unitário quanto o de integração -->
-						<param>net.originmobi.pdv.produtoService.ProdutoService*</param>
+						<!-- A classe contém os testes unitários e o teste de integração Spring. -->
+						<param>net.originmobi.pdv*</param>
 					</targetTests>
 				</configuration>
 			</plugin>

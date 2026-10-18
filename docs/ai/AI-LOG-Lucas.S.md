@@ -68,10 +68,21 @@ para a análise e evolução dos testes de `VendaService`.
 | Delegação | Não foram usados agentes nesta etapa. O diagnóstico ficou circunscrito à classe de serviço, à sua classe de teste, ao seletor do PIT e ao relatório gerado; foi possível inspecionar e validar diretamente sem dividir o mesmo fluxo entre agentes. |
 | Validação executada e conclusão | `mvn clean -DskipTests test-compile` compilou as fontes limpas; esse comando valida compilação, não execução. `mvn -Dtest=VendaServiceTest test` executou os 27 métodos JUnit da classe, com 0 falhas e 0 erros. `mvn org.pitest:pitest-maven:1.11.1:mutationCoverage` terminou com `BUILD SUCCESS` e gerou o índice HTML e o detalhe por linha de `VendaService`: 112/126 linhas (89%), 60/66 mutações mortas (91%), força 60/65 (92%) e uma mutação sem cobertura. A conclusão sobre a correção não decorre apenas dos estados `BUILD SUCCESS`/teste verde: decorre também de os asserts observarem o contrato dos fluxos com resultados derivados dos dados de entrada, sobretudo `94.0` para total e caixa e `47.0` para cada parcela, e de os testes verificarem que falhas e ramificações não produzem efeitos indevidos. O PIT reportou uma advertência sobre JUnit 5 no classpath sem plugin PIT JUnit 5; os testes da classe alvo são JUnit 4, o PIT os encontrou e os executou (o relatório contém os mutantes mortos e a cobertura), logo a advertência não invalidou esta medição. |
 
+| Informação | Descrição |
+| Responsável | Equipe do projeto, com apoio do Copilot SDK no VS Code |
+| Atividade | Criação de um teste de integração HTTP para autenticação e acesso a endpoint protegido |
+| Ferramentas | Copilot SDK no VS Code, Java `HttpURLConnection`, JUnit 4, Maven e aplicação/banco MySQL ativos pelo Docker Compose |
+| Prompt/instrução | Criar um único teste usando verificação HTTP de endpoints (opção 3), validar na hora contra o sistema em execução e registrar a implementação |
+| Implementação | Criado `src/test/java/net/originmobi/pdv/HttpEndpointIntegrationTest.java`. O teste envia uma requisição `POST /login` com as credenciais administrativas já documentadas, valida o redirecionamento HTTP para `/` e a criação do cookie de sessão; em seguida envia `GET /produto` com esse cookie e valida HTTP 200 e a presença do texto `Produto` na página. As conexões têm timeout e são encerradas após o uso. O teste acessa a aplicação externa em `http://localhost:8080`, sem inicializar outro contexto Spring, usar mocks ou alterar dados do banco. |
+| Decisão | Usar endpoints reais permite exercitar a cadeia HTTP de autenticação e autorização, incluindo a sessão e a resposta renderizada. O teste permanece único e direcionado; requer que aplicação e banco estejam previamente ativos no Docker e usa a conta administrativa de demonstração já prevista pelo projeto. A seção `Teste de integração HTTP` e o comando de execução também foram acrescentados ao `README.md`. |
+| Validação executada e conclusão | Confirmado que os serviços `pdv-app` e `pdv-db` estavam ativos e saudáveis; uma chamada HTTP independente ao login respondeu 200 e exibiu o formulário. O fluxo de autenticação foi então verificado contra a aplicação: `POST /login` retornou 302 com destino `/`, e `GET /produto` com a sessão retornou 200 e exibiu o título `Produto`. `mvn -Dtest=HttpEndpointIntegrationTest -DforkCount=0 test` compilou e executou o teste direcionado: 1 teste, 0 falhas, 0 erros, `BUILD SUCCESS`. A aprovação considera as asserções explícitas sobre status, destino do redirecionamento, cookie e conteúdo da página, não apenas o estado de sucesso do Maven. |
+
 ## Observações
 
 - Os testes adicionados e ajustados estão em
   `src/test/java/net/originmobi/pdv/VendaServiceTest.java`.
+- O teste de integração HTTP está em
+  `src/test/java/net/originmobi/pdv/HttpEndpointIntegrationTest.java`.
 - A execução dos testes também gerou o relatório JaCoCo em
   `target/site/jacoco/index.html`.
 - Foram identificados possíveis problemas na implementação de produção, como

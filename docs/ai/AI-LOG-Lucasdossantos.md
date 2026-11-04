@@ -59,5 +59,45 @@ Por que não testamos:
 
 - **Modificações:** pradonizar o uso `doThrow(...).when(...)`.  refatoração do código e eliminar a necessidade -> any(), anyLong(), anyString() .
 
+## Registro 03
+
+- **Data:** 20/09/2026
+- **Ferramenta:** Gemini 3.8 flash.
+- **Objetivo:** ajudar a construir teste manual no test link de modo eficiente.
+- **Prompt:** assuma que voce e testador experiente e tem como objetivo -> Uso da ferramenta Testlink para ao menos um cenário de teste . funcionalidade de um sistema web pdv. justifique o que fazer? e pergunte o que precisa saber?
+- **Resultado:**  a ia apresentou estrategia para criar teste manual na ferramenta test link, padrao usado na aula de laboratório da professora Vania (criar projeto de teste -> criar plano de teste -> criar caso de teste -> especificar caso de teste -> adicionar suite de teste ->adiiconar ao plano de teste -> criar/build release -> criar plataformas -> adicionar plataforma ao plano de teste -> executar teste -> relatorio gerar no teste link(pdf)).
+- **Uso no projeto:** os teste foi feito para a funcionalidade " adicionar forma de pagamento".
+- **Modificações:** refazer o caso de teste para abranger situações de falha. porque o sistema web pdv aceita erros como {data inválida: para cartão de crédito} e {campo nulo: nome do metodo de pagamento}.
+
+
+##registro 04
+- **Data:** 01/11/2026
+- **Ferramenta:** Gemini 3.6flash.
+- **Objetivo:** melhoria dos teste unitario da classe EmpresaServiceTest.java
+- **Prompt:** assuma que voce e um professor de teste de software  - mas faca de forma simples  novos teste unitario para a classe EmpresaServiceTest.java
+- **Resultado:**  14/14 testes aprovados (regra de negócio da EmpresaService, mocks com Mockito e tratamento de exceções de aresta).
+- **Uso no projeto:** public void deveRetornarErroQuandoRegimeNaoEncontradoNoCadastro() - public void deveRetornarErroQuandoCidadeNaoEncontradaNoCadastro()
+- **Modificações:**  Para alinhar os testes exatamente ao comportamento real da EmpresaService,  tratar excessoes try/catch da classe EmpresaService.
+
+##registro 05
+- **Data:** 04/11/2026
+- **Ferramenta:** gpt-5.6 luna(github account student)
+- **Objetivo:**  elaborar teste de integracao para o sistema web pdv
+- **Prompt:**  Assuma que voce e um experiente professor de teste de software - implemente um codigo java para fazer teste de integracao para a classe EmpresaService
+- **Resultado:**  "Empresa salva com sucesso" - salvo na tabela tabela empresa - parâmetros persistindo em endereco - dados atualizados corretamente no banco - metodo verificaEmpresaCadastrada() retorna empresa existente
+- **Uso no projeto:**  @spingBootTest para inciar o contexto real do spring - @autowired pra obter EpresaService real - jdbcTemplate para consultar a preparar dados no mysql - junit4, compativel com a configuracao atual do maven - banco mysql, configurado em application.properties
+- **Modificações:** o contexto real do spring foi carregado - nao foram utilizados mocks para o empresaService - os dados foram inseridos no banco de dados real.
+
+##registro 06
+- **Data:** 01/11/2026
+- **Ferramenta:**gpt-5.6 luna(github account student)
+- **Objetivo:**  elaborar teste de sistema para requisito funcional e nao funcional
+- **Prompt:**  Assuma que voce e um experiente engenheiro de software sua missao e fazer e justificar um teste de sistema para a classe EmpresaService nao precisa alterar o projeto apenas apresente o que deve ser feito de forma textual
+(nao fuja do escopo)(se nao sabe diga nao sei) Implementar testes de sistema considerando requisitos funcionais - Pelo menos um requisito não funcional (atributos de qualidade -
+Preenchimento dos dados empresariais, endereço e informações fiscais. **Desempenho:** a operação de salvar deve apresentar resposta em menos de 5 segundos. 
+- **Resultado:** A página deve retornar com sucesso. O formulário de empresa deve ser exibido. Devem estar disponíveis os campos de dados cadastrais, endereço e parâmetros fiscais. Cidades, regimes tributários e ambientes devem ser carregados.
+- **Uso no projeto:** implementacao de codigo em java para os seguintes requisitos funcionais: RNF de Segurança (Controle de Acesso). - RF 1 (Fluxo Real de Atualização): - RF 2 (Validação de Campo Obrigatório):
+- **Modificações:**   resolver erro do maven a proposta de requisito nao funcional foi alterado - e eliminei o uso de pageobjects (dificuldade na implementacao)
+
 
 

@@ -277,7 +277,35 @@ public class EmpresaServiceTest {
 
         assertEquals("Erro ao salvar dados da empresa, chame o suporte", resultado);
     }
+    
+    
+/**
+     * Cobertura de Aresta: Falha ao buscar Regime Tributário no cadastro novo (Optional vazio).
+     * O tributario.get() está dentro de um bloco try-catch no EmpresaService, retornando a mensagem de erro.
+     */
+    @Test
+    public void deveLancarExcecaoQuandoRegimeNaoEncontradoNoCadastro() {
+        when(regimes.busca(anyLong())).thenReturn(Optional.empty());
+        when(cidades.busca(anyLong())).thenReturn(Optional.of(new Cidade()));
 
+        String resultado = service.merger(null, "Empresa", "Fantasia", "CNPJ", "IE", 1, 1, 99L, 1L, 1L,
+                "Rua", "Bairro", "1", "CEP", "Ref", 10.0);
+
+        assertEquals("Erro ao salvar dados da empresa, chame o suporte", resultado);
+    }
+
+    /**
+     * Cobertura de Aresta: Falha ao buscar Cidade no cadastro novo (Optional vazio).
+     * O cidade.get() é executado fora do try-catch no EmpresaService, portanto lança NoSuchElementException.
+     */
+    @Test(expected = java.util.NoSuchElementException.class)
+    public void deveLancarExcecaoQuandoCidadeNaoEncontradaNoCadastro() {
+        when(regimes.busca(anyLong())).thenReturn(Optional.of(new RegimeTributario()));
+        when(cidades.busca(anyLong())).thenReturn(Optional.empty());
+
+        service.merger(null, "Empresa", "Fantasia", "CNPJ", "IE", 1, 1, 1L, 1L, 99L,
+                "Rua", "Bairro", "1", "CEP", "Ref", 10.0);
+    }
     // =========================================================
     // MÉTODOS AUXILIARES
     // Deixam os testes mais curtos e evitam repetição

@@ -77,6 +77,9 @@ Para logar no sistema, use o usuário "gerente" e a senha "123".
   - Relatorio de uso de IA - docs\ai\AI-LOG-Lucas.S.md
 - LUCAS DOS SANTOS uso de I.A
    - <https://docs.google.com/document/d/1dv712XlZ3jS_mLKI8FzXd94eMappuMh8a_EvRGHdgEU/edit?usp=sharing>
+   - teste unitario -/src/test/java/net/originmobi/pdv/EmpresaServiceTest.java
+   - teste integracao -/src/test/java/net/originmobi/pdv/EmpresaServiceIntegrationTest.java
+   - teste de sistema -/src/test/java/net/originmobi/pdv/testSistema/EmpresaServiceSistemaTest.java 
 - Mateus Sacramento - Uso de IA
   - <https://docs.google.com/document/d/1vQ_x3osLlFGZ7qSuDIdj0CCssJOHfyOuoohleFVoGa8/edit?usp=sharing>
 - Davis Esmael - Uso de IA

@@ -69,7 +69,7 @@ Por que não testamos:
 - **Uso no projeto:** os teste foi feito para a funcionalidade " adicionar forma de pagamento".
 - **Modificações:** refazer o caso de teste para abranger situações de falha. porque o sistema web pdv aceita erros como {data inválida: para cartão de crédito} e {campo nulo: nome do metodo de pagamento}.
 
-
+⚠️ desconsidere esses registros(04,05e06) pois as astividades foram removidas  e refeita para alinha ao escopo do Trabalho - tirei duvidas com a professora Vania de qualidade e teste de software para sistemas de informacao. 
 ##registro 04
 - **Data:** 01/11/2026
 - **Ferramenta:** Gemini 3.6flash.
@@ -99,5 +99,52 @@ Preenchimento dos dados empresariais, endereço e informações fiscais. **Desem
 - **Uso no projeto:** implementacao de codigo em java para os seguintes requisitos funcionais: RNF de Segurança (Controle de Acesso). - RF 1 (Fluxo Real de Atualização): - RF 2 (Validação de Campo Obrigatório):
 - **Modificações:**   resolver erro do maven a proposta de requisito nao funcional foi alterado - e eliminei o uso de pageobjects (dificuldade na implementacao)
 
+
+Registro 07
+- **Data:**07/11/2026
+- **Ferramenta:** ChatGPTweb(gratuito)
+- **Objetivo:** Elaborar e executar um teste automatizado de sistema para o cadastro de empresa, contemplando o preenchimento dos dados empresariais, endereço e informações fiscais.
+- **Prompt:** Assuma que você é um experiente engenheiro de software. Sua missão é orientar a elaboração de um teste de sistema para o cadastro de empresa no projeto Trabalho-QeT---, utilizando Java, JUnit e Selenium WebDriver. Não altere desnecessariamente o projeto. Oriente a execução passo a passo, identifique possíveis problemas e justifique os procedimentos adotados.
+- **Resultado:** Foi implementado e executado um teste automatizado para o fluxo de cadastro de empresa. O teste realizou o acesso ao sistema, a autenticação, a navegação até o formulário, o preenchimento dos dados cadastrais, do endereço e dos parâmetros fiscais, além do acionamento do botão Salvar. A execução apresentou BUILD SUCCESS, com um teste executado e sem falhas ou exceções reportadas pelo JUnit. Entretanto, não foi possível confirmar a mensagem de sucesso nem a persistência dos dados no banco de dados.
+- **Uso no projeto:** Implementação e execução do teste de sistema CadastroEmpresaSistemaTest, utilizando Selenium WebDriver, Firefox em modo headless, JUnit, WebDriverManager e WebDriverWait. O teste contemplou o fluxo de autenticação e preenchimento do formulário de cadastro de empresa.
+-** Modificações: **Foi ajustado o formulário empresa/form.html para explicitar o método HTTP POST (method="post"), seguido da recompilação do projeto e reconstrução do contêiner Docker. Foram realizadas investigações no controlador EmpresaController, no formulário Thymeleaf e na configuração de segurança SecurityConfig. A proteção CSRF foi identificada como desabilitada. Optou-se por não modificar o controlador nem realizar novas alterações na lógica interna da aplicação, preservando o código existente e registrando as limitações encontradas no teste.
+
+
+Registro 08
+-**Data:**09/11/2026
+-**Ferramenta:** ChatGPTweb(gratuito)
+- **Objetivo:** Elaborar testes unitários para a classe NotaFiscalService, validando seus principais métodos.
+-**Prompt:** Analise a classe NotaFiscalService e implemente testes unitários para os métodos lista(), busca(), totalNotaFiscalEmitidas(), cadastrar() e geraDV(), utilizando JUnit e Mockito, sem alterar as classes de produção.
+-**Resultado:** Foram criados 17 testes unitários, todos aprovados, com 80% de cobertura pelo JaCoCo.
+-**Uso no projeto:** Apoio na elaboração e validação dos testes unitários da classe NotaFiscalService.
+-**Modificações:** Foi criada a classe NotaFiscalServiceTest, com testes para cenários de sucesso, ausência de dados, cálculo do dígito verificador e tratamento de exceções. Não foram realizadas alterações nas classes de produção.
+
+
+registro 09
+- **Data:** 09/11/2026
+- **Ferramenta:** gemini3.6-flash
+- **Objetivo:**  Realizar teste estrutural para o modulo NotaFiscalService
+- **Prompt:**  Assuma que voce é um experiente professor da universidade federal fluminense -faca o mapeamento e grafo de fluxo controle - conte as arestas - aplique a tecnica estrutural -criterio toda-arestas - use o criterio de decisao a & b a || b assuma todos valores possiveis pelo menos uma vezmétricas estáticas calculadas exclusivamente a partir do código-fonte original da classe/método sob teste;  estou certo? pergunte caso tenha duvida? 
+- **Resultado:** Resolução do erro de runtime via inicialização explícita (MockitoAnnotations.initMocks(this) no @Before), resultando em BUILD SUCCESS com 13 testes executados, 0 falhas, 0 erros, e geração bem-sucedida do arquivo de cobertura target/jacoco.exec.
+- **Uso no projeto:**Validação da baseline do teste estrutural para o método geraDV (cobertura de decisões em curto-circuito) e para o método cadastrar da classe NotaFiscalService, preparando a suíte de testes para a etapa subsequente de Análise de Mutação (PITest).
+- **Modificações:**   Remoção da anotação de classe @RunWith(MockitoJUnitRunner.class).Adição da chamada MockitoAnnotations.initMocks(this); dentro do método @Before setUp().Ajuste de importações para compatibilidade direta com a suíte de testes Surefire no Maven.
+
+registro 10
+- **Data:** 10/11/2026
+- **Ferramenta:** gemini3.6-flash
+- **Objetivo:** Injetar defeitos sintéticos no código compilado (operadores alterados,   retornos modificados, limites invertidos) para avaliar a capacidade da suíte de testes de detectar falhas. 
+- **Prompt:**  Assuma que voce e um experiente Professor de teste de software da universidade federal - a partir do teste feito com junit5 e tecnica estrutural - todas as arestas - ajuda com o teste de mutacao. 
+- **Resultado:**Análise concluída em 4 segundos com BUILD SUCCESS. Foram gerados 34 mutantes no total, obtendo uma Força de Teste (Test Strength) de 75% sobre o código exercitado (18 mutantes mortos de 24 cobertos).
+- **Uso no projeto:**Comprovação da qualidade e rigor das asserções implementadas nos critérios Toda-Arestas e Curto-Circuito (geraDV e cadastrar), garantindo que a suíte não apenas executa o código, mas detecta alterações semânticas e defeitos sintéticos no software.
+
+
+Registro 11
+-**Data:**10/11/2026
+-**Ferramenta:** ChatGPTweb(gratuito)
+- **Objetivo:** Elaborar testes funcional 
+-**Prompt:** Assuma que voce e um experiente professor de teste de software; entao entenda os "html" e comportamento "do AJAX" do venda.js do projeto para que voce faca um teste funcional com selenium.
+-**Resultado:** o teste automazidado testou duas funcionalidades 
+-**Uso no projeto:** Realizar pedido: o teste criou um pedido, selecionou o cliente, selecionou o produto Picolé, inseriu o produto e verificou sua presença na tabela e o total de R$ 6,50.RF11 – Listar e pesquisar pedidos abertos: o teste também passou, validando a localização e a pesquisa de um pedido aberto.
+-**Modificações:** nao foi implementado o teste automatizado de pagar devido ao sistema nao conseguir completar a tarefa - nao possuo agente de I.A para melhorar o sistema web
 
 

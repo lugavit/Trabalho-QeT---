@@ -64,7 +64,7 @@ public class EmpresaController {
 		String cep = request.get("endereco.cep");
 		String referencia = request.get("endereco.referencia");
 		String tipoAmbiente = request.get("parametro.ambiente");
-		String aliqCred = request.get("parametro.pCredSN").replace(",", ".");
+		String aliqCred = request.get("parametro.pCredSN").replace("%", "").replace(",", ".").trim();
 
 		int ambiente = tipoAmbiente.isEmpty() ? null : Integer.parseInt(tipoAmbiente);
 		int serie = vlSerie.isEmpty() ? 0 : Integer.parseInt(vlSerie);

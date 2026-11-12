@@ -151,4 +151,78 @@ public class CaixaLancamentoServiceTest {
         assertEquals(2, retorno.size());
         verify(caixaLancamentoRepository, times(1)).findByCaixaEquals(caixaAberto);
     }
+
+    @Test
+    public void testLancamentoComObservacaoPreenchida() {
+        Caixa caixa = new Caixa();
+        caixa.setValor_total(500.0);
+
+        CaixaLancamento lancamento = new CaixaLancamento();
+        lancamento.setCaixa(caixa);
+        lancamento.setEstilo(EstiloLancamento.ENTRADA);
+        lancamento.setTipo(TipoLancamento.SUPRIMENTO);
+        lancamento.setValor(50.0);
+        lancamento.setObservacao("Observação customizada");
+
+        String resultado = caixaLancamentoService.lancamento(lancamento);
+
+        assertEquals("Lançamento realizado com sucesso", resultado);
+        assertEquals("Observação customizada", lancamento.getObservacao());
+    }
+
+    @Test
+    public void testLancamentoSaidaComValorZero() {
+        Caixa caixa = new Caixa();
+        caixa.setValor_total(200.0);
+
+        CaixaLancamento lancamento = new CaixaLancamento();
+        lancamento.setCaixa(caixa);
+        lancamento.setEstilo(EstiloLancamento.SAIDA);
+        lancamento.setTipo(TipoLancamento.SANGRIA);
+        lancamento.setValor(0.0);
+        lancamento.setObservacao("");
+
+        String resultado = caixaLancamentoService.lancamento(lancamento);
+
+        assertEquals("Lançamento realizado com sucesso", resultado);
+        assertEquals("Sangria de caixa", lancamento.getObservacao());
+    }
+
+    @Test(expected = IllegalStateException.class)
+    public void testLancamentoErroAoSalvar() {
+        Caixa caixa = new Caixa();
+        caixa.setValor_total(300.0);
+
+        CaixaLancamento lancamento = new CaixaLancamento();
+        lancamento.setCaixa(caixa);
+        lancamento.setEstilo(EstiloLancamento.ENTRADA);
+        lancamento.setTipo(TipoLancamento.SUPRIMENTO);
+        lancamento.setValor(20.0);
+        lancamento.setObservacao("Teste erro");
+
+        when(caixaLancamentoRepository.save(any(CaixaLancamento.class)))
+                .thenThrow(new RuntimeException("Falha de banco"));
+
+        caixaLancamentoService.lancamento(lancamento);
+    }
+
+    @Test
+	public void testConstrutorPadrao() {
+		CaixaLancamentoService servico = new CaixaLancamentoService();
+		assertNotNull(servico);
+	}
+
+	@Test
+	public void testLancamentoComCaixaNaoPresente() {
+		CaixaLancamento lancamento = new CaixaLancamento();
+		lancamento.setCaixa(null);
+		lancamento.setEstilo(EstiloLancamento.ENTRADA);
+		lancamento.setTipo(TipoLancamento.SUPRIMENTO);
+		lancamento.setValor(50.0);
+		lancamento.setObservacao("Teste sem caixa");
+
+		String resultado = caixaLancamentoService.lancamento(lancamento);
+
+		assertEquals("Lançamento realizado com sucesso", resultado);
+	}
 }

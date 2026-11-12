@@ -4,6 +4,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.openqa.selenium.TimeoutException;
 
 public class PaginaLogin {
     private final WebDriver driver;
@@ -28,7 +29,7 @@ public class PaginaLogin {
     public boolean isErroLoginVisivel() {
         try {
             return wait.until(ExpectedConditions.visibilityOfElementLocated(erroLogin)).isDisplayed();
-        } catch (Exception e) {
+        } catch (TimeoutException e) {
             return false;
         }
     }

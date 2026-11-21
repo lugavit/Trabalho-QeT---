@@ -368,7 +368,8 @@ public class VendaServiceTest {
         Caixa caixa = new Caixa();
         when(caixas.caixaIsAberto()).thenReturn(true);
         when(caixas.caixaAberto()).thenReturn(Optional.of(caixa));
-        when(usuarios.buscaUsuario("usuario")).thenReturn(usuario);
+        // any(): o teste não depende do nome que o singleton Aplicacao devolver
+        when(usuarios.buscaUsuario(any())).thenReturn(usuario);
 
         String result = vendaService.fechaVenda(1L, 1L, 100.0, 10.0, 4.0,
                 new String[] {"100.0"}, new String[] {"2"});

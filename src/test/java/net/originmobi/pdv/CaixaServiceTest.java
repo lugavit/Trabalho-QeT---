@@ -8,12 +8,15 @@ import java.sql.Timestamp;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import net.originmobi.pdv.enumerado.caixa.CaixaTipo;
@@ -49,10 +52,21 @@ public class CaixaServiceTest {
         usuarioMock = new Usuario();
         usuarioMock.setCodigo(1L);
         // Simulando uma senha de banco já criptografada para passar pela validação do fechaCaixa
-        usuarioMock.setSenha(encoder.encode("senha123")); 
-        
+        usuarioMock.setSenha(encoder.encode("senha123"));
+
+        // CORREÇÃO: simula um usuário logado para o Aplicacao.getUsuarioAtual()
+        SecurityContextHolder.getContext().setAuthentication(
+                new UsernamePasswordAuthenticationToken("usuarioTeste", "senha123"));
+
         // Simula o retorno de qualquer usuário solicitado pela Aplicação (Singleton)
-        when(usuarios.buscaUsuario(any())).thenReturn(usuarioMock);
+        // lenient() evita UnnecessaryStubbingException nos testes que não chegam a usar este stub
+        lenient().when(usuarios.buscaUsuario(any())).thenReturn(usuarioMock);
+    }
+
+    @After
+    public void tearDown() {
+        // CORREÇÃO: limpa o contexto de segurança para não vazar entre testes
+        SecurityContextHolder.clearContext();
     }
 
     // =========================================================================
@@ -75,7 +89,7 @@ public class CaixaServiceTest {
         // Validações
         assertEquals("Caixa diário", caixa.getDescricao());
         assertEquals(Double.valueOf(100.0), caixa.getValor_abertura());
-        
+
         // Verifica se persistiu o caixa e gerou o lançamento no CaixaLancamentoService
         verify(caixas, times(1)).save(caixa);
         verify(lancamentos, times(1)).lancamento(any(CaixaLancamento.class));
@@ -95,7 +109,7 @@ public class CaixaServiceTest {
 
         assertEquals(Double.valueOf(0.0), caixa.getValor_abertura());
         assertEquals(Double.valueOf(0.0), caixa.getValor_total()); // Como não há lançamento, zera o total
-        
+
         // Verifica que o lançamento inicial NÃO foi gerado (pois o valor não é > 0)
         verify(lancamentos, never()).lancamento(any(CaixaLancamento.class));
     }
@@ -135,7 +149,7 @@ public class CaixaServiceTest {
         } catch (RuntimeException e) {
             assertEquals("Existe caixa de dias anteriores em aberto, favor verifique", e.getMessage());
         }
-        
+
         // Garante que o método save() nunca foi tocado
         verify(caixas, never()).save(any());
     }
@@ -193,16 +207,16 @@ public class CaixaServiceTest {
         caixa.setTipo(CaixaTipo.BANCO);
         caixa.setValor_abertura(100.0);
         caixa.setDescricao("Banco Teste");
-        // BUG: Usuario não informou a agência (null). 
+        // BUG: Usuario não informou a agência (null).
         // O código não prevê isso e tenta dar um .replaceAll()
-        caixa.setAgencia(null); 
+        caixa.setAgencia(null);
         caixa.setConta("12345");
 
         try {
             caixaService.cadastro(caixa);
             fail("Deveria ter lançado NullPointerException pelo erro não tratado do desenvolvedor");
         } catch (NullPointerException e) {
-            // Este teste prova que o sistema "quebra" feio aqui ao invés de retornar uma 
+            // Este teste prova que o sistema "quebra" feio aqui ao invés de retornar uma
             // RuntimeException amigável exigindo o preenchimento da Agência.
             assertTrue(true);
         }
@@ -217,7 +231,7 @@ public class CaixaServiceTest {
             caixaService.fechaCaixa(999L, "senha123");
             fail("Deveria ter lançado NoSuchElementException pelo uso inadequado de Optional.get()");
         } catch (NoSuchElementException e) {
-            // BUG provado: Como o programador fez "caixaAtual.get().setData_fechamento()" 
+            // BUG provado: Como o programador fez "caixaAtual.get().setData_fechamento()"
             // sem usar if (caixaAtual.isPresent()), o Java estoura erro interno (Code 500)
             assertTrue(true);
         }

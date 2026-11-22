@@ -210,7 +210,7 @@ public class VendaService {
 					if (!caixas.caixaIsAberto())
 						throw new RuntimeException("nenhum caixa aberto");
 
-					qtdVezes = avistaDinheiro(vlprodutos, vlParcelas, formaPagar, qtdVezes, i, acre, desc);
+					qtdVezes = avistaDinheiro(vlprodutos, vlParcelas, formaPagar, qtdVezes, i, desc, acre);
 				}
 
 				// se for no cartão de debito ou crédito
@@ -229,8 +229,8 @@ public class VendaService {
 					throw new RuntimeException("Venda sem cliente, verifique");
 
 				// no dinheiro
-				sequencia = aprazo(vlprodutos, vlParcelas, dataAtual, formaPagar, qtdVezes, sequencia, receber, i, acre,
-					desc);
+				sequencia = aprazo(vlprodutos, vlParcelas, dataAtual, formaPagar, qtdVezes, sequencia, receber, i, desc,
+						acre);
 			}
 
 			try {

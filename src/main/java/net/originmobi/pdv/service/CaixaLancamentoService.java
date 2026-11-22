@@ -18,71 +18,71 @@ import net.originmobi.pdv.repository.CaixaLancamentoRepository;
 @Service
 public class CaixaLancamentoService {
 
-	@Autowired
 	private CaixaLancamentoRepository caixaLancamento;
-
-	@Autowired
 	UsuarioService usuarios;
 
-	private Timestamp dataHoraAtual;
-
 	public CaixaLancamentoService() {
+		// Construtor padrão
+	}
+
+	@Autowired
+	public CaixaLancamentoService(CaixaLancamentoRepository caixaLancamento, UsuarioService usuarios) {
+		this.caixaLancamento = caixaLancamento;
+		this.usuarios = usuarios;
 	}
 
 	@Transactional(readOnly = false, propagation = Propagation.REQUIRED)
 	public String lancamento(CaixaLancamento lancamento) {
-		dataHoraAtual = new Timestamp(System.currentTimeMillis());
+		Timestamp dataHoraAtual = new Timestamp(System.currentTimeMillis());
 
 		try {
 			lancamento.setData_cadastro(dataHoraAtual);
 
 			if (!lancamento.getCaixa().isPresent()
 					&& lancamento.getCaixa().map(Caixa::getData_fechamento).isPresent()) {
-				throw new RuntimeException("Nenhum caixa aberto");
+				throw new IllegalStateException("Nenhum caixa aberto");
 			}
 
-			// se for realizar uma saida de caixa, verifica se tem saldo
-			// suficiente para isso
 			if (lancamento.getEstilo().equals(EstiloLancamento.SAIDA)) {
 				Optional<Double> vlTotalCaixa = lancamento.getCaixa().map(Caixa::getValor_total);
-				
+
 				if (lancamento.getValor() > vlTotalCaixa.get()) {
 					return "Saldo insuficiente para realizar esta operação";
 				}
 			}
 
-			// se for do tipo SAIDA, converte o valor que vier para negativo
 			if (lancamento.getEstilo().equals(EstiloLancamento.SAIDA) && lancamento.getValor() > 0) {
 				Double valorNegativo = (lancamento.getValor() * -1);
 				lancamento.setValor(valorNegativo);
 			}
 
-			// verifica o tipo de lançamento e de acordo com ele coloca uma
-			// observação no lançamento caso a mesma venha vazia.
-			if (lancamento.getObservacao().isEmpty()) {
-				String observacao = "";
-				if (lancamento.getTipo().equals(TipoLancamento.SANGRIA))
-					observacao = lancamento.getObservacao().isEmpty() ? "Sangria de caixa" : lancamento.getObservacao();
-				else if (lancamento.getTipo().equals(TipoLancamento.SUPRIMENTO))
-					observacao = lancamento.getObservacao().isEmpty() ? "Suprimento de caixa"
-							: lancamento.getObservacao();
+			ajustarObservacaoSeVazia(lancamento);
 
-				lancamento.setObservacao(observacao);
-			}
-
+		} catch (IllegalStateException e) {
+			throw e;
 		} catch (Exception e) {
-			e.getStackTrace();
-			throw new RuntimeException();
+			throw new IllegalStateException(e);
 		}
 
 		try {
 			caixaLancamento.save(lancamento);
 		} catch (Exception e) {
-			e.getMessage();
-			throw new RuntimeException("Erro ao realizar lançamento, chame o suporte");
+			throw new IllegalStateException("Erro ao realizar lançamento, chame o suporte", e);
 		}
 
 		return "Lançamento realizado com sucesso";
+	}
+
+	private void ajustarObservacaoSeVazia(CaixaLancamento lancamento) {
+		if (lancamento.getObservacao().isEmpty()) {
+			String observacao = "";
+			if (lancamento.getTipo().equals(TipoLancamento.SANGRIA)) {
+				observacao = "Sangria de caixa";
+			} else if (lancamento.getTipo().equals(TipoLancamento.SUPRIMENTO)) {
+				observacao = "Suprimento de caixa";
+			}
+			lancamento.setObservacao(observacao);
+		}
 	}
 
 	public List<CaixaLancamento> lancamentosDoCaixa(Caixa caixa) {

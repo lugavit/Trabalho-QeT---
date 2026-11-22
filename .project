@@ -22,24 +22,44 @@
 	</natures>
 	<linkedResources>
 		<link>
+			<name>.._Trabalho-QeT---.worktrees_service-classes-report-summary_src_main_java</name>
+			<type>2</type>
+			<location>//C:/Users/lugav/OneDrive/Documentos/GitHub/Trabalho-QeT---.worktrees/service-classes-report-summary/src/main/java/</location>
+		</link>
+		<link>
+			<name>.._Trabalho-QeT---.worktrees_service-classes-report-summary_src_main_resources</name>
+			<type>2</type>
+			<location>//C:/Users/lugav/OneDrive/Documentos/GitHub/Trabalho-QeT---.worktrees/service-classes-report-summary/src/main/resources/</location>
+		</link>
+		<link>
+			<name>.._Trabalho-QeT---.worktrees_service-classes-report-summary_src_test_java</name>
+			<type>2</type>
+			<location>//C:/Users/lugav/OneDrive/Documentos/GitHub/Trabalho-QeT---.worktrees/service-classes-report-summary/src/test/java/</location>
+		</link>
+		<link>
+			<name>.._Trabalho-QeT---.worktrees_service-classes-report-summary_target_classes</name>
+			<type>2</type>
+			<location>//C:/Users/lugav/OneDrive/Documentos/GitHub/Trabalho-QeT---.worktrees/service-classes-report-summary/target/classes/</location>
+		</link>
+		<link>
 			<name>.._Trabalho-QeT---.worktrees_validate-vendaservice-tests-and-mocks_src_main_java</name>
 			<type>2</type>
-			<location>//C:/Users/lugav/OneDrive/Documentos/GitHub/Trabalho-QeT---.worktrees/validate-vendaservice-tests-and-mocks/src/main/java/</location>
+			<location>C:/Users/lugav/OneDrive/Documentos/GitHub/Trabalho-QeT---.worktrees/validate-vendaservice-tests-and-mocks/src/main/java</location>
 		</link>
 		<link>
 			<name>.._Trabalho-QeT---.worktrees_validate-vendaservice-tests-and-mocks_src_main_resources</name>
 			<type>2</type>
-			<location>//C:/Users/lugav/OneDrive/Documentos/GitHub/Trabalho-QeT---.worktrees/validate-vendaservice-tests-and-mocks/src/main/resources/</location>
+			<location>C:/Users/lugav/OneDrive/Documentos/GitHub/Trabalho-QeT---.worktrees/validate-vendaservice-tests-and-mocks/src/main/resources</location>
 		</link>
 		<link>
 			<name>.._Trabalho-QeT---.worktrees_validate-vendaservice-tests-and-mocks_src_test_java</name>
 			<type>2</type>
-			<location>//C:/Users/lugav/OneDrive/Documentos/GitHub/Trabalho-QeT---.worktrees/validate-vendaservice-tests-and-mocks/src/test/java/</location>
+			<location>C:/Users/lugav/OneDrive/Documentos/GitHub/Trabalho-QeT---.worktrees/validate-vendaservice-tests-and-mocks/src/test/java</location>
 		</link>
 		<link>
 			<name>.._Trabalho-QeT---.worktrees_validate-vendaservice-tests-and-mocks_target_classes</name>
 			<type>2</type>
-			<location>//C:/Users/lugav/OneDrive/Documentos/GitHub/Trabalho-QeT---.worktrees/validate-vendaservice-tests-and-mocks/target/classes/</location>
+			<location>C:/Users/lugav/OneDrive/Documentos/GitHub/Trabalho-QeT---.worktrees/validate-vendaservice-tests-and-mocks/target/classes</location>
 		</link>
 	</linkedResources>
 	<filteredResources>

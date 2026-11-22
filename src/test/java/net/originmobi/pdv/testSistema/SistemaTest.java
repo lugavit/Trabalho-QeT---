@@ -40,10 +40,10 @@ public class SistemaTest {
 
     @ParameterizedTest
     @CsvSource({
-            "Boneco, 10.00, 15.00, UN, 2023-01-01",
-            "Carrinho de Bebê, 50.00, 75.00, UN, 2023-01-02"
+            "PS5, 3000.00, 4400.00, UN, 2029-02-01",
+            "GTA VI, 200.00, 550.00, UN, 2041-11-19"
     })
-    public void cadastrarProdutoComIsencao(
+    public void cadastrarProdisento(
             String descricao, String custo, String venda, String unidade, String validade) {
         PaginaLogin paginaLogin = new PaginaLogin(driver, wait);
         paginaLogin.FazerLogin("gerente", "123");

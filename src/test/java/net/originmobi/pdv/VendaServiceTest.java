@@ -58,6 +58,7 @@ import net.originmobi.pdv.service.UsuarioService;
 import net.originmobi.pdv.service.VendaProdutoService;
 import net.originmobi.pdv.service.VendaService;
 import net.originmobi.pdv.service.cartao.CartaoLancamentoService;
+import net.originmobi.pdv.singleton.Aplicacao;
 
 @RunWith(MockitoJUnitRunner.class)
 public class VendaServiceTest {
@@ -89,6 +90,17 @@ public class VendaServiceTest {
     @After
     public void tearDown() {
         SecurityContextHolder.clearContext();
+    }
+
+    @Test
+    public void testAplicacaoBuscaUsuarioAutenticadoAtual() {
+        SecurityContextHolder.getContext()
+                .setAuthentication(new UsernamePasswordAuthenticationToken("usuarioInicial", null));
+        Aplicacao aplicacao = Aplicacao.getInstancia();
+        SecurityContextHolder.getContext()
+                .setAuthentication(new UsernamePasswordAuthenticationToken("usuarioAtual", null));
+
+        assertEquals("usuarioAtual", aplicacao.getUsuarioAtual());
     }
 
     @Test

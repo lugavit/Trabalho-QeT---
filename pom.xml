@@ -198,6 +198,27 @@
 				</executions>
 			</plugin>
 
+			<!-- Teste de mutação (PIT). Executar com:
+			     mvnw.cmd test-compile org.pitest:pitest-maven:mutationCoverage
+			     Relatório em target/pit-reports/index.html -->
+			<plugin>
+				<groupId>org.pitest</groupId>
+				<artifactId>pitest-maven</artifactId>
+				<version>1.15.3</version>
+				<configuration>
+					<targetClasses>
+						<param>net.originmobi.pdv.service.AjusteProdutoService</param>
+					</targetClasses>
+					<targetTests>
+						<param>net.originmobi.pdv.AjusteProdutoServiceTest</param>
+					</targetTests>
+					<outputFormats>
+						<param>HTML</param>
+						<param>XML</param>
+					</outputFormats>
+					<timestampedReports>false</timestampedReports>
+
+
 			<plugin>
 				<groupId>org.pitest</groupId>
 				<artifactId>pitest-maven</artifactId>
@@ -210,6 +231,7 @@
 						<!-- A classe contém os testes unitários e o teste de integração Spring. -->
 						<param>net.originmobi.pdv*</param>
 					</targetTests>
+ 
 				</configuration>
 			</plugin>
 		</plugins>

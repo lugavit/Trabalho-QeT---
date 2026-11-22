@@ -1,0 +1,22 @@
+# Uso (na raiz do projeto):
+#   docker compose -f docker-compose.test.yml run --rm cobertura
+#   docker compose -f docker-compose.test.yml run --rm mutacao
+services:
+  cobertura:
+    image: maven:3.9-eclipse-temurin-11
+    working_dir: /app
+    volumes:
+      - .:/app
+      - pdv-m2:/root/.m2
+    command: mvn -B clean test -Dtest=AjusteProdutoServiceTest
+
+  mutacao:
+    image: maven:3.9-eclipse-temurin-11
+    working_dir: /app
+    volumes:
+      - .:/app
+      - pdv-m2:/root/.m2
+    command: mvn -B test-compile org.pitest:pitest-maven:mutationCoverage
+
+volumes:
+  pdv-m2:

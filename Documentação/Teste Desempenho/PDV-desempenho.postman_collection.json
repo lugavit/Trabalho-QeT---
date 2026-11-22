@@ -1,0 +1,76 @@
+{
+  "info": {
+    "_postman_id": "6228e46e-0927-41ca-8a3e-717569477323",
+    "name": "PDV-desempenho",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "58228137",
+    "_collection_link": "https://go.postman.co/collection/58228137-6228e46e-0927-41ca-8a3e-717569477323?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "login desempenho",
+      "protocolProfileBehavior": {
+        "followRedirects": false
+      },
+      "request": {
+        "method": "POST",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/login?username=gerente&password=123",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "login"
+          ],
+          "query": [
+            {
+              "key": "username",
+              "value": "gerente"
+            },
+            {
+              "key": "password",
+              "value": "123"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "categoria requisicao",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Status HTTP 200\", function () {\n    pm.response.to.have.status(200);\n});\n\nconsole.log(\n    \"Tempo de resposta:\",\n    pm.response.responseTime,\n    \"ms\"\n);"
+            ]
+          }
+        }
+      ],
+      "protocolProfileBehavior": {
+        "followRedirects": false
+      },
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/categoria",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "categoria"
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}

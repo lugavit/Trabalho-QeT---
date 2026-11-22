@@ -40,8 +40,8 @@ public class SistemaTest {
 
     @ParameterizedTest
     @CsvSource({
-            "PS5, 3000.00, 4400.00, UN, 2029-02-01",
-            "GTA VI, 200.00, 550.00, UN, 2041-11-19"
+            "PlayStation 5, 3000.00, 4400.00, UN, 01/02/2029",
+            "GTA VI, 200.00, 550.00, UN, 19/11/2041"
     })
     public void cadastrarProdisento(
             String descricao, String custo, String venda, String unidade, String validade) {

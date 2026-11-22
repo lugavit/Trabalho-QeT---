@@ -123,8 +123,8 @@ public class ProdutoController {
 		String vendavel = request.get("vendavel");
 
 		Long codigoprod = prod.isEmpty() ? 0 : Long.decode(prod);
-		Double valorCusto = vlcusto.isEmpty() ? 0.0 : Double.valueOf(vlcusto.replace(",", "."));
-		Double valorVenda = vlvenda.isEmpty() ? 0.0 : Double.valueOf(vlvenda.replace(",", "."));
+		Double valorCusto = parseValor(vlcusto);
+		Double valorVenda = parseValor(vlvenda);
 		Long tributacao = vlTributacao.isEmpty() ? null : Long.decode(vlTributacao);
 		Long modbc = codModbc.isEmpty() ? null : Long.decode(codModbc);
 
@@ -156,6 +156,17 @@ public class ProdutoController {
 		
 		return "redirect:/produto";
 
+	}
+
+	private Double parseValor(String valor) {
+		if (valor == null || valor.trim().isEmpty())
+			return 0.0;
+
+		String valorNormalizado = valor.trim();
+		if (valorNormalizado.contains(","))
+			valorNormalizado = valorNormalizado.replace(".", "").replace(",", ".");
+
+		return Double.valueOf(valorNormalizado);
 	}
 
 	@GetMapping("{codigo}")

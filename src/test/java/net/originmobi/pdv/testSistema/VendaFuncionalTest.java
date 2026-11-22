@@ -7,6 +7,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
+import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -139,13 +140,22 @@ public class VendaFuncionalTest {
         WebElement pesquisa = wait.until(
                 ExpectedConditions.visibilityOfElementLocated(campoPesquisa));
 
+        String urlAntesDaPesquisa = driver.getCurrentUrl();
         pesquisa.sendKeys(codigo);
         pesquisa.sendKeys(Keys.ENTER);
 
-        wait.until(ExpectedConditions.visibilityOfElementLocated(pedidoNaLista));
+        wait.until(ExpectedConditions.stalenessOf(pesquisa));
+        wait.until(ExpectedConditions.not(ExpectedConditions.urlToBe(urlAntesDaPesquisa)));
 
-        assertTrue(driver.findElement(pedidoNaLista).isDisplayed(),
-                "O pedido aberto não foi encontrado após a pesquisa pelo código.");
+        boolean pedidoEncontrado = wait.until(webDriver -> {
+            try {
+                return webDriver.findElement(pedidoNaLista).isDisplayed();
+            } catch (StaleElementReferenceException e) {
+                return false;
+            }
+        });
+
+        assertTrue(pedidoEncontrado, "O pedido aberto não foi encontrado após a pesquisa pelo código.");
     }
 }
 

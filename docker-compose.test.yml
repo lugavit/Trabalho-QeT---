@@ -16,7 +16,7 @@ services:
     volumes:
       - .:/app
       - pdv-m2:/root/.m2
-    command: mvn -B test-compile org.pitest:pitest-maven:mutationCoverage
+    command: mvn -B test-compile org.pitest:pitest-maven:mutationCoverage -Ppit-ajuste
 
 volumes:
   pdv-m2:

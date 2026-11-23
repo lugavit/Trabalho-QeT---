@@ -214,4 +214,34 @@
 			</plugin>
 		</plugins>
 	</build>
+
+	<!-- Perfil para rodar o PIT somente na AjusteProdutoService (sem mexer na configuração do PIT dos colegas).
+	     Uso: mvn test-compile org.pitest:pitest-maven:mutationCoverage -Ppit-ajuste
+	     Relatório em target/pit-reports/index.html -->
+	<profiles>
+		<profile>
+			<id>pit-ajuste</id>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.pitest</groupId>
+						<artifactId>pitest-maven</artifactId>
+						<configuration>
+							<targetClasses combine.self="override">
+								<param>net.originmobi.pdv.service.AjusteProdutoService</param>
+							</targetClasses>
+							<targetTests combine.self="override">
+								<param>net.originmobi.pdv.AjusteProdutoServiceTest</param>
+							</targetTests>
+							<outputFormats combine.self="override">
+								<param>HTML</param>
+								<param>XML</param>
+							</outputFormats>
+							<timestampedReports>false</timestampedReports>
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
 </project>

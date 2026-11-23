@@ -204,7 +204,7 @@
 				<version>1.15.0</version>
 				<configuration>
 					<targetClasses>
-						<param>net.originmobi.pdv.service*</param>
+						<param>net.originmobi.pdv*</param>
 					</targetClasses>
 					<targetTests>
 						<!-- A classe contém os testes unitários e o teste de integração Spring. -->

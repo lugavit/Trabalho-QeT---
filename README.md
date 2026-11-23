@@ -40,6 +40,20 @@ Sistema de ERP web desenvolvido em Java com Spring Framework com testes automati
 - O app estará disponível em:
       - <http://localhost:8080/>
 
+## Setup simplificado usando Docker + Powershell do Windows
+
+1 - Na raíz do projeto, no terminal/CMD/Powershell, rode:
+
+docker run --rm -v "${PWD}:/app" -v pdv-m2:/root/.m2 -w /app maven:3.9-eclipse-temurin-8 mvn -B clean package -DskipTests
+
+2 - Após finalizar o procedimento acima, rode:
+
+docker compose up --build
+
+3 - Aguarda as mensagens de que o Spring iniciou e abra o link abaixo no navegador:
+
+http://localhost:8080/
+
 ## Teste de integração HTTP
 
 Com a aplicação e o banco iniciados pelo Docker, execute somente o teste que autentica via HTTP e acessa a lista protegida de produtos:

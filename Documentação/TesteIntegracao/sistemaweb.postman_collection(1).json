@@ -1,0 +1,282 @@
+{
+  "info": {
+    "_postman_id": "7bb6b7b5-f362-4318-8891-2edc2058216a",
+    "name": "sistemaweb",
+    "description": "### Welcome to Postman! This is your first collection. \n\nCollections are your starting point for building and testing APIs. You can use this one to:\n\n• Group related requests\n• Test your API in real-world scenarios\n• Document and share your requests\n\nUpdate the name and overview whenever you’re ready to make it yours.\n\n[Learn more about Postman Collections.](https://learning.postman.com/docs/collections/collections-overview/)",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "58228137",
+    "_collection_link": "https://go.postman.co/collection/58228137-7bb6b7b5-f362-4318-8891-2edc2058216a?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "Fazer login",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Login aceito\", function(){pm.expect([200, 302]).to.include(pm.response.code);});\n\npm.test(\"Sessao http criada \", function(){pm.expect(pm.cookies.has(\"JSESSIONID\")).to.be.true;});"
+            ]
+          }
+        }
+      ],
+      "protocolProfileBehavior": {
+        "followRedirects": false
+      },
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "urlencoded",
+          "urlencoded": [
+            {
+              "key": "username",
+              "value": "gerente"
+            },
+            {
+              "key": "password",
+              "value": "123"
+            }
+          ]
+        },
+        "url": {
+          "raw": "http://localhost:8080/login",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "login"
+          ]
+        }
+      },
+      "response": [
+        {
+          "name": "Fazer login",
+          "originalRequest": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "key": "gerente",
+                  "value": "123"
+                }
+              ]
+            },
+            "url": {
+              "raw": "http://localhost:8080/login",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "login"
+              ]
+            }
+          },
+          "_postman_previewlanguage": "html",
+          "header": [
+            {
+              "key": "X-Content-Type-Options",
+              "value": "nosniff"
+            },
+            {
+              "key": "X-XSS-Protection",
+              "value": "1; mode=block"
+            },
+            {
+              "key": "Cache-Control",
+              "value": "no-cache, no-store, max-age=0, must-revalidate"
+            },
+            {
+              "key": "Pragma",
+              "value": "no-cache"
+            },
+            {
+              "key": "Expires",
+              "value": "0"
+            },
+            {
+              "key": "X-Frame-Options",
+              "value": "DENY"
+            },
+            {
+              "key": "Content-Type",
+              "value": "text/html;charset=UTF-8"
+            },
+            {
+              "key": "Content-Language",
+              "value": "pt-BR"
+            },
+            {
+              "key": "Transfer-Encoding",
+              "value": "chunked"
+            },
+            {
+              "key": "Date",
+              "value": "Sat, 21 Nov 2026 00:46:26 GMT"
+            }
+          ],
+          "cookie": [],
+          "body": "<!DOCTYPE html>\n<html xmlns=\"http://www.w3.org/1999/xhtml\">\n\n<head>\n<meta charset=\"UTF-8\" />\n<meta http-equiv=\"Content-Type\" content=\"txt/html; charset=UTF-8\" />\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\" />\n\n<link rel=\"stylesheet\" type=\"text/css\"\n\thref=\"/css/bootstrap.min.css\" />\n<link rel=\"stylesheet\" type=\"text/css\" href=\"/css/login/login.css\" />\n<title>PDV - Login</title>\n</head>\n\n<body>\n\n\t<div class=\"container\">\n\t\t<div class=\"row\">\n\t\t\t<div class=\"col-md-5 col-md-offset-3\">\n\n\t\t\t\t\n\n\t\t\t\t\n\n\t\t\t\t<div class=\"panel panel-primary\" id=\"painelLoginPrimaio\">\n\t\t\t\t\t<div class=\"panel-heading\" id=\"painelLogin\">Entrar no Sistema</div>\n\t\t\t\t\t<div class=\"panel-body\">\n\t\t\t\t\t\t<form action=\"/login\" method=\"post\">\n\t\t\t\t\t\t\t<div class=\"form-group\">\n\t\t\t\t\t\t\t\t<label for=\"user\"><span class=\"glyphicon glyphicon-user\"><b\n\t\t\t\t\t\t\t\t\t\tid=\"texto\">Usuário</b></span></label> <input id=\"user\" type=\"text\"\n\t\t\t\t\t\t\t\t\tname=\"username\" class=\"form-control\" />\n\t\t\t\t\t\t\t</div>\n\n\t\t\t\t\t\t\t<div class=\"form-group\">\n\t\t\t\t\t\t\t\t<label for=\"password\"><span\n\t\t\t\t\t\t\t\t\tclass=\"glyphicon glyphicon-eye-close\"><b id=\"texto\">Senha</b></span></label>\n\t\t\t\t\t\t\t\t<input id=\"password\" type=\"password\" name=\"password\"\n\t\t\t\t\t\t\t\t\tclass=\"form-control\" />\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<div class=\"row\">\n\t\t\t\t\t\t\t\t<button type=\"submit\"\n\t\t\t\t\t\t\t\t\tclass=\"btn col-md-10 col-md-offset-1 col-lg-10 col-lg-offset-1 col-xs-10 col-xs-offset-1\" id=\"btn-login\">Entrar</button>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</form>\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t</div>\n\t</div>\n\n</body>\n</html>"
+        }
+      ]
+    },
+    {
+      "name": "Cadastrar descricao",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Resposta recebida\",function(){pm.expect(pm.response.code).to.be.oneOf([200,302])});\n\nconsole.log(\"Status:\",pm.response.code);\nconsole.log(\"Resposta:\",pm.response.text());\n\n\n\n"
+            ]
+          }
+        }
+      ],
+      "protocolProfileBehavior": {
+        "followRedirects": false
+      },
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "urlencoded",
+          "urlencoded": [
+            {
+              "key": "descricao",
+              "value": "Categoria teste manual"
+            }
+          ]
+        },
+        "url": {
+          "raw": "http://localhost:8080/categoria",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "categoria"
+          ]
+        },
+        "description": "This is a POST request, submitting data to an API via the request body. This request submits JSON data, and the data is reflected in the response.\n\nA successful POST request typically returns a `200 OK` or `201 Created` response code."
+      },
+      "response": [
+        {
+          "name": "Cadastrar descricao",
+          "originalRequest": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "key": "descricao",
+                  "value": "Categoria teste manual"
+                }
+              ]
+            },
+            "url": {
+              "raw": "http://localhost:8080/categoria/form",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "categoria",
+                "form"
+              ]
+            }
+          },
+          "_postman_previewlanguage": "json",
+          "header": [
+            {
+              "key": "Allow",
+              "value": "GET"
+            },
+            {
+              "key": "X-Content-Type-Options",
+              "value": "nosniff"
+            },
+            {
+              "key": "X-XSS-Protection",
+              "value": "1; mode=block"
+            },
+            {
+              "key": "Cache-Control",
+              "value": "no-cache, no-store, max-age=0, must-revalidate"
+            },
+            {
+              "key": "Pragma",
+              "value": "no-cache"
+            },
+            {
+              "key": "Expires",
+              "value": "0"
+            },
+            {
+              "key": "X-Frame-Options",
+              "value": "DENY"
+            },
+            {
+              "key": "Content-Type",
+              "value": "application/json;charset=UTF-8"
+            },
+            {
+              "key": "Transfer-Encoding",
+              "value": "chunked"
+            },
+            {
+              "key": "Date",
+              "value": "Sat, 21 Nov 2026 02:23:12 GMT"
+            }
+          ],
+          "cookie": [],
+          "body": "{\n  \"timestamp\": \"2026-11-21T02:23:12.603+0000\",\n  \"status\": 405,\n  \"error\": \"Method Not Allowed\",\n  \"message\": \"Request method 'POST' not supported\",\n  \"path\": \"/categoria/form\"\n}"
+        }
+      ]
+    },
+    {
+      "name": "Cadastro confirma",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Lista carregada \", function () {pm.response.to.have.status(200);\n    \n});\n\npm.test(\"Categoria cadastrada aparece na lista\", function () {\n    pm.expect(pm.response.text()).to.include(\"Categoria teste manual\");\n    \n});\n\n"
+            ]
+          }
+        }
+      ],
+      "protocolProfileBehavior": {
+        "followRedirects": false
+      },
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/categoria",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "categoria"
+          ]
+        },
+        "description": "This is a GET request and it is used to \"get\" data from an endpoint. There is no request body for a GET request, but you can use query parameters to help specify the resource you want data on (e.g., in this request, we have `id=1`).\n\nA successful GET response will have a `200 OK` status, and should include some kind of response body - for example, HTML web content or JSON data."
+      },
+      "response": []
+    }
+  ]
+}

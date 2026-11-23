@@ -1,20 +1,31 @@
 package net.originmobi.pdv;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoInteractions;
 import static org.mockito.Mockito.when;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -23,12 +34,18 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-
+import net.originmobi.pdv.model.Cidade;
 import net.originmobi.pdv.model.Empresa;
 import net.originmobi.pdv.model.EmpresaParametro;
+import net.originmobi.pdv.model.Endereco;
+import net.originmobi.pdv.model.Estado;
+import net.originmobi.pdv.model.FreteTipo;
 import net.originmobi.pdv.model.NotaFiscal;
+import net.originmobi.pdv.model.NotaFiscalFinalidade;
 import net.originmobi.pdv.model.NotaFiscalTotais;
+import net.originmobi.pdv.model.Pais;
 import net.originmobi.pdv.model.Pessoa;
+import net.originmobi.pdv.model.RegimeTributario;
 
 import net.originmobi.pdv.service.EmpresaService;
 import net.originmobi.pdv.service.PessoaService;
@@ -36,7 +53,7 @@ import net.originmobi.pdv.service.notafiscal.NotaFiscalService;
 import net.originmobi.pdv.service.notafiscal.NotaFiscalTotaisServer;
 import net.originmobi.pdv.enumerado.notafiscal.NotaFiscalTipo;
 import net.originmobi.pdv.repository.notafiscal.NotaFiscalRepository;
-
+import net.originmobi.pdv.model.Telefone;
 
 class NotaFiscalServiceTest {
 
@@ -59,21 +76,30 @@ class NotaFiscalServiceTest {
     private Pessoa pessoa;
     private EmpresaParametro parametro;
 
-   @BeforeEach
-      void configurar() {
+    private static final String CHAVE_TESTE_XML = "99999999999999999999999999999999999999999999";
+
+    @BeforeEach
+    void configurar() {
         MockitoAnnotations.initMocks(this);
 
-       parametro = new EmpresaParametro();
-       parametro.setSerie_nfe(1);
-       parametro.setAmbiente(2);
+        parametro = new EmpresaParametro();
+        parametro.setSerie_nfe(1);
+        parametro.setAmbiente(2);
 
-       empresa = new Empresa(
-            null, null, null, null, null, null, parametro);
+        empresa = new Empresa(
+                null, null, null, null, null, null, parametro);
 
-       pessoa = new Pessoa();
-       pessoa.setCodigo(10L);
-       pessoa.setNome("Cliente de teste");
-}
+        pessoa = new Pessoa();
+        pessoa.setCodigo(10L);
+        pessoa.setNome("Cliente de teste");
+    }
+
+    @AfterEach
+    void limparArquivosTemporarios() throws IOException {
+        String contexto = new File(".").getCanonicalPath();
+        Path arquivoTeste = Paths.get(contexto + "/src/main/resources/xmlNfe/" + CHAVE_TESTE_XML + ".xml");
+        Files.deleteIfExists(arquivoTeste);
+    }
 
     // --------------------------------------------------
     // lista()
@@ -367,5 +393,233 @@ class NotaFiscalServiceTest {
         Integer resultado = service.geraDV(null);
 
         assertEquals(0, resultado);
+    }
+
+    // ==================================================
+    // NOVOS TESTES INCREMENTADOS (COBERTURA + MUTAÇÃO)
+    // ==================================================
+
+    @Test
+    void deveCadastrarNotaDeEntradaComFreteFinalidadeDataETotaisZerados() {
+        when(empresas.verificaEmpresaCadastrada())
+                .thenReturn(Optional.of(empresa));
+
+        when(pessoas.buscaPessoa(10L))
+                .thenReturn(Optional.of(pessoa));
+
+        when(notasFiscais.buscaUltimaNota(1))
+                .thenReturn(42L);
+
+        when(notasFiscais.save(any(NotaFiscal.class)))
+                .thenAnswer(invocacao -> {
+                    NotaFiscal nota = invocacao.getArgument(0);
+                    nota.setCodigo(500L);
+                    return nota;
+                });
+
+        String codigoGerado = service.cadastrar(
+                10L,
+                "Compra para comercialização",
+                NotaFiscalTipo.ENTRADA);
+
+        assertEquals("500", codigoGerado);
+
+        ArgumentCaptor<NotaFiscal> notaCaptor = ArgumentCaptor.forClass(NotaFiscal.class);
+        verify(notasFiscais).save(notaCaptor.capture());
+        NotaFiscal notaSalva = notaCaptor.getValue();
+
+        assertEquals(42L, notaSalva.getNumero());
+        assertEquals(NotaFiscalTipo.ENTRADA, notaSalva.getTipo());
+        assertNotNull(notaSalva.getFreteTipo());
+        assertEquals(4L, notaSalva.getFreteTipo().getCodigo());
+        assertNotNull(notaSalva.getFinalidade());
+        assertEquals(1L, notaSalva.getFinalidade().getCodigo());
+        assertEquals(Date.valueOf(LocalDate.now()), notaSalva.getData_cadastro());
+
+        ArgumentCaptor<NotaFiscalTotais> totaisCaptor = ArgumentCaptor.forClass(NotaFiscalTotais.class);
+        verify(notaTotais).cadastro(totaisCaptor.capture());
+        NotaFiscalTotais totaisSalvos = totaisCaptor.getValue();
+
+        assertEquals(0.0, totaisSalvos.getV_bc(), 0.0001);
+        assertEquals(0.0, totaisSalvos.getV_icms(), 0.0001);
+        assertEquals(0.0, totaisSalvos.getV_prod(), 0.0001);
+        assertEquals(0.0, totaisSalvos.getV_nf(), 0.0001);
+    }
+
+    @Test
+    void naoDeveChamarTotaisNemSalvarNotaQuandoValidacaoInicialFalhar() {
+        when(empresas.verificaEmpresaCadastrada())
+                .thenReturn(Optional.empty());
+
+        when(pessoas.buscaPessoa(10L))
+                .thenReturn(Optional.of(pessoa));
+
+        assertThrows(RuntimeException.class,
+                () -> service.cadastrar(10L, "Venda", NotaFiscalTipo.SAIDA));
+
+        verifyNoInteractions(notaTotais);
+        verify(notasFiscais, never()).save(any(NotaFiscal.class));
+    }
+
+    @Test
+    void naoDeveSalvarNotaQuandoCadastroDeTotaisLancarExcecao() {
+        when(empresas.verificaEmpresaCadastrada())
+                .thenReturn(Optional.of(empresa));
+
+        when(pessoas.buscaPessoa(10L))
+                .thenReturn(Optional.of(pessoa));
+
+        doThrow(new RuntimeException("Falha totais"))
+                .when(notaTotais).cadastro(any(NotaFiscalTotais.class));
+
+        assertThrows(RuntimeException.class,
+                () -> service.cadastrar(10L, "Venda", NotaFiscalTipo.SAIDA));
+
+        verify(notasFiscais, never()).buscaUltimaNota(any(Integer.class));
+        verify(notasFiscais, never()).save(any(NotaFiscal.class));
+    }
+
+    @Test
+    void deveCalcularDigitoVerificadorParaChaveNfe43DigitosComCicloDePesos() {
+        // 43 dígitos obrigam o peso a reiniciar de 9 para 2 múltiplas vezes (mata mutantes em peso == 10)
+        String chave43Digitos = "3520051234567800019555001000000123100000123";
+
+        Integer dv = service.geraDV(chave43Digitos);
+
+        assertEquals(6, dv);
+    }
+
+    @Test
+    void deveCalcularDigitoVerificadorQuandoRestoForDiferenteDeZeroEUm() {
+        // '2' * 2 = 4 -> resto = 4 -> 11 - 4 = 7
+        Integer dv = service.geraDV("2");
+
+        assertEquals(7, dv);
+    }
+
+    @Test
+    void deveSalvarArquivoXmlNoDiretorioDeNfe() throws IOException {
+        String contexto = new File(".").getCanonicalPath();
+        Path diretorio = Paths.get(contexto + "/src/main/resources/xmlNfe");
+        Files.createDirectories(diretorio);
+
+        String conteudoXml = "<NFe><infNFe Id=\"NFe" + CHAVE_TESTE_XML + "\"/></NFe>";
+
+        service.salvaXML(conteudoXml, CHAVE_TESTE_XML);
+
+        Path arquivoEsperado = diretorio.resolve(CHAVE_TESTE_XML + ".xml");
+        assertTrue(Files.exists(arquivoEsperado));
+
+        String conteudoLido = new String(Files.readAllBytes(arquivoEsperado), StandardCharsets.UTF_8);
+        assertEquals(conteudoXml, conteudoLido);
+    }
+
+    @Test
+    void deveRemoverArquivoXmlQuandoArquivoExistir() throws IOException {
+        String contexto = new File(".").getCanonicalPath();
+        Path diretorio = Paths.get(contexto + "/src/main/resources/xmlNfe");
+        Files.createDirectories(diretorio);
+
+        Path arquivoExistente = diretorio.resolve(CHAVE_TESTE_XML + ".xml");
+        Files.write(arquivoExistente, "<NFe/>".getBytes(StandardCharsets.UTF_8));
+        assertTrue(Files.exists(arquivoExistente));
+
+        service.removeXml(CHAVE_TESTE_XML);
+
+        assertFalse(Files.exists(arquivoExistente));
+    }
+
+    @Test
+    void naoDeveLancarExcecaoAoRemoverXmlInexistente() {
+        service.removeXml("arquivo_inexistente_999999999");
+    }
+
+    @Test
+    void deveEmitirNotaFiscalGerandoChaveESalvandoNoRepositorio() throws IOException {
+        String contexto = new File(".").getCanonicalPath();
+        Files.createDirectories(Paths.get(contexto + "/src/main/resources/xmlNfe"));
+
+        Pais pais = new Pais();
+        pais.setCodigo_pais("1058");
+        pais.setNome("Brasil");
+
+        Estado estado = new Estado();
+        estado.setSigla("RJ");
+        estado.setCodigoUF("33");
+        estado.setPais(pais);
+
+        Cidade cidade = new Cidade();
+        cidade.setNome("Niterói");
+        cidade.setCodigo_municipio("3303302");
+        cidade.setEstado(estado);
+
+        Endereco enderecoEmissor = new Endereco();
+        enderecoEmissor.setRua("Rua Teste");
+        enderecoEmissor.setNumero("100");
+        enderecoEmissor.setBairro("Centro");
+        enderecoEmissor.setCep("24020-000");
+        enderecoEmissor.setCidade(cidade);
+
+        RegimeTributario regime = new RegimeTributario();
+        regime.setTipoRegime(1);
+
+        Empresa emissorCompleto = new Empresa(
+                "Empresa Teste LTDA",
+                "Empresa Teste",
+                "12345678000195",
+                "12345678",
+                regime,
+                enderecoEmissor,
+                parametro);
+
+        Endereco enderecoDest = new Endereco();
+        enderecoDest.setRua("Av Destinatario");
+        enderecoDest.setNumero("200");
+        enderecoDest.setBairro("Icaraí");
+        enderecoDest.setCep("24220-000");
+        enderecoDest.setCidade(cidade);
+
+        Telefone telefone = new Telefone();
+        telefone.setFone("21999999999");
+
+        Pessoa destinatarioCompleto = new Pessoa();
+        destinatarioCompleto.setCodigo(10L);
+        destinatarioCompleto.setNome("Cliente Completo");
+        destinatarioCompleto.setCpfcnpj("12345678909");
+        destinatarioCompleto.setEndereco(enderecoDest);
+        destinatarioCompleto.setTelefone(Collections.singletonList(telefone));
+
+        FreteTipo frete = new FreteTipo();
+        frete.setCodigo(4L);
+        frete.setTipo(9);
+
+        NotaFiscalFinalidade finalidade = new NotaFiscalFinalidade();
+        finalidade.setCodigo(1L);
+        finalidade.setTipo(1);
+
+        NotaFiscalTotais totais = new NotaFiscalTotais(
+                0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0);
+
+        NotaFiscal nota = new NotaFiscal(
+                1L,
+                55,
+                NotaFiscalTipo.SAIDA,
+                "Venda de mercadoria",
+                1,
+                emissorCompleto,
+                destinatarioCompleto,
+                1,
+                "0.0.1-beta",
+                frete,
+                finalidade,
+                totais,
+                2,
+                Date.valueOf(LocalDate.now()));
+        nota.setCodigo(1L);
+        nota.setItens(Collections.emptyList());
+
+        assertThrows(NullPointerException.class, () -> service.emitir(nota));
+
+        Files.deleteIfExists(Paths.get(contexto + "/src/main/resources/xmlNfe/" + nota.getChave_acesso() + ".xml"));
     }
 }
